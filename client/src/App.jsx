@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -76,7 +75,8 @@ const App = () => {
 const AppContent = () => {
   const { isAuthenticated, loading } = useAuth();
   const { alert, closeAlert } = useAlert();
-  const [dynamicTheme, setDynamicTheme] = useState(null);
+  // We'll use currentTheme state instead of the unused dynamicTheme variable
+  const [currentTheme, setCurrentTheme] = useState(null);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -88,7 +88,7 @@ const AppContent = () => {
     try {
       const themeData = await getSiteTheme();
       if (themeData) {
-        setDynamicTheme(createTheme({
+        const newTheme = createTheme({
           palette: {
             primary: {
               main: themeData.colors.primary,
@@ -124,7 +124,8 @@ const AppContent = () => {
               fontFamily: themeData.fonts.heading,
             },
           },
-        }));
+        });
+        setCurrentTheme(newTheme);
       }
     } catch (error) {
       console.error('Erreur lors du chargement du thème:', error);
