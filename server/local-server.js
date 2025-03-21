@@ -1,4 +1,3 @@
-// server/local-server.js
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -7,12 +6,15 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
 
 // Configuration
 const PORT = process.env.PORT || 3001;
 const DATA_DIR = path.join(__dirname, 'data');
 const MEDIA_DIR = path.join(DATA_DIR, 'media');
 const JWT_SECRET = 'ayurveda-cms-secret-dev';
+const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 
 // Création des répertoires nécessaires
 fs.ensureDirSync(DATA_DIR);
@@ -642,6 +644,14 @@ app.put('/api/settings/smtp', authenticate, async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });
+// Servir la documentation Swagger
+
+app.use('/api-docs/swagger.yaml', (req, res) => {
+  res.setHeader('Content-Type', 'application/yaml');
+  res.sendFile(path.join(__dirname, 'swagger.yaml'));
+});
+app.use('/api-docs', express.static(path.join(__dirname, 'public/api-docs')));
+
 
 // Fonction utilitaire pour créer un snapshot d'un fichier avant modification (versioning)
 async function createVersionSnapshot(directory, filename) {
