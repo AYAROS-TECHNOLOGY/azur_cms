@@ -46,5 +46,15 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "@babel/generator": "^7.26.10",
+        "@babel/helper-remap-async-to-generator": "^7.25.9",
+        "@babel/helper-replace-supers": "^7.26.5",
+        "@babel/helper-wrap-function": "^7.25.9",
+        "@babel/traverse": "^7.26.10",
+        "@babel/types": "^7.26.10",
+        "core-js": "^3.41.0",
+        "regenerator-runtime": "^0.14.1"
     }
 }
