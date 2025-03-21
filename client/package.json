@@ -3,46 +3,48 @@
     "version": "1.0.0",
     "private": true,
     "dependencies": {
-      "@emotion/react": "^11.10.8",
-      "@emotion/styled": "^11.10.8",
-      "@mui/icons-material": "^5.11.16",
-      "@mui/material": "^5.12.2",
-      "axios": "^1.4.0",
-      "cheerio": "^1.0.0-rc.12",
-      "draft-js": "^0.11.7",
-      "draftjs-to-html": "^0.9.1",
-      "html-to-draftjs": "^1.5.0",
-      "react": "^18.2.0",
-      "react-beautiful-dnd": "^13.1.1",
-      "react-color": "^2.19.3",
-      "react-dom": "^18.2.0",
-      "react-draft-wysiwyg": "^1.15.0",
-      "react-router-dom": "^6.11.0",
-      "react-scripts": "5.0.1",
-      "uuid": "^9.0.0"
+        "@emotion/react": "^11.10.8",
+        "@emotion/styled": "^11.10.8",
+        "@mui/icons-material": "^5.11.16",
+        "@mui/material": "^5.12.2",
+        "axios": "^1.4.0",
+        "cheerio": "^1.0.0-rc.12",
+        "draft-js": "^0.11.7",
+        "draftjs-to-html": "^0.9.1",
+        "es-abstract": "^1.23.9",
+        "html-to-draftjs": "^1.5.0",
+        "react": "^18.2.0",
+        "react-beautiful-dnd": "^13.1.1",
+        "react-color": "^2.19.3",
+        "react-dom": "^18.2.0",
+        "react-draft-wysiwyg": "^1.15.0",
+        "react-router-dom": "^6.11.0",
+        "react-scripts": "5.0.1",
+        "uuid": "^9.0.0",
+        "webpack": "^5.98.0"
     },
     "scripts": {
-      "start": "react-scripts start",
-      "build": "react-scripts build",
-      "test": "react-scripts test",
-      "eject": "react-scripts eject"
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
     },
     "eslintConfig": {
-      "extends": [
-        "react-app",
-        "react-app/jest"
-      ]
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
     },
     "browserslist": {
-      "production": [
-        ">0.2%",
-        "not dead",
-        "not op_mini all"
-      ],
-      "development": [
-        "last 1 chrome version",
-        "last 1 firefox version",
-        "last 1 safari version"
-      ]
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     }
-  }
+}
