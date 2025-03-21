@@ -1,4 +1,3 @@
-// client/src/components/editors/RichTextEditor.jsx
 import React, { useState, useEffect } from 'react';
 import { EditorState, ContentState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';

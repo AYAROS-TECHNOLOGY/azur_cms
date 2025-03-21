@@ -1,4 +1,3 @@
-// client/src/components/editors/MetadataEditor.jsx
 import React from 'react';
 import {
   Box,
