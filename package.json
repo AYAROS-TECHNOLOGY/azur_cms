@@ -1,0 +1,40 @@
+{
+    "name": "ayurveda-cms",
+    "version": "1.0.0",
+    "description": "CMS léger pour le site Ayurveda Équilibre",
+    "main": "index.js",
+    "scripts": {
+      "start": "concurrently \"npm run server\" \"npm run client\"",
+      "server": "nodemon -e js server/local-server.js",
+      "client": "cd client && npm start",
+      "build:client": "cd client && npm run build",
+      "build:functions": "cd functions && npm run build",
+      "build": "npm run build:client && npm run build:functions",
+      "deploy": "firebase deploy",
+      "init-content": "node server/init-content.js",
+      "test": "jest"
+    },
+    "keywords": [
+      "cms",
+      "ayurveda",
+      "serverless"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+      "concurrently": "^8.0.1",
+      "nodemon": "^2.0.22"
+    },
+    "devDependencies": {
+      "firebase-tools": "^12.0.1",
+      "jest": "^29.5.0"
+    },
+    "engines": {
+      "node": ">=16.0.0"
+    },
+    "workspaces": [
+      "client",
+      "functions"
+    ],
+    "private": true
+  }

@@ -1,0 +1,40 @@
+{
+  "pages": [
+    {
+      "id": "home",
+      "title": "Accueil",
+      "path": "/",
+      "template": "home",
+      "isPublished": true
+    }
+  ],
+  "navigation": {
+    "main": [
+      {
+        "id": "accueil",
+        "label": "Accueil",
+        "path": "#accueil"
+      },
+      {
+        "id": "services",
+        "label": "Soins",
+        "path": "#services"
+      },
+      {
+        "id": "philosophy",
+        "label": "Philosophie",
+        "path": "#philosophy"
+      },
+      {
+        "id": "testimonials",
+        "label": "Témoignages",
+        "path": "#testimonials"
+      },
+      {
+        "id": "contact",
+        "label": "Contact",
+        "path": "#contact"
+      }
+    ]
+  }
+}

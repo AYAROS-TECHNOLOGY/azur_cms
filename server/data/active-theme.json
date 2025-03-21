@@ -1,0 +1,15 @@
+{
+  "id": "default",
+  "name": "Ayurveda Équilibre",
+  "colors": {
+    "primary": "#0a4b44",
+    "accent": "#d4a039",
+    "light": "#f9f5f0",
+    "dark": "#1f332e",
+    "neutral": "#e6e0d4"
+  },
+  "fonts": {
+    "heading": "'Cormorant Garamond', serif",
+    "body": "'Montserrat', sans-serif"
+  }
+}

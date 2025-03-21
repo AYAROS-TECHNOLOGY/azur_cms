@@ -1,0 +1,459 @@
+{
+  "title": "Ayurveda Équilibre",
+  "meta": {
+    "description": "",
+    "keywords": ""
+  },
+  "theme": {
+    "colors": {
+      "primary": "#0a4b44",
+      "accent": "#d4a039",
+      "light": "#f9f5f0",
+      "dark": "#1f332e",
+      "neutral": "#e6e0d4"
+    },
+    "fonts": {
+      "heading": "'Cormorant Garamond', serif",
+      "body": "'Montserrat', sans-serif"
+    }
+  },
+  "sections": [
+    {
+      "id": "header",
+      "type": "header",
+      "className": "header",
+      "content": [
+        {
+          "id": "header-logo",
+          "type": "logo",
+          "text": "Ayurveda Équilibre"
+        },
+        {
+          "id": "main-navigation",
+          "type": "navigation",
+          "items": [
+            {
+              "id": "nav-item-0",
+              "label": "Accueil",
+              "url": "#accueil"
+            },
+            {
+              "id": "nav-item-1",
+              "label": "Soins",
+              "url": "#services"
+            },
+            {
+              "id": "nav-item-2",
+              "label": "Philosophie",
+              "url": "#philosophy"
+            },
+            {
+              "id": "nav-item-3",
+              "label": "Témoignages",
+              "url": "#testimonials"
+            },
+            {
+              "id": "nav-item-4",
+              "label": "Contact",
+              "url": "#contact"
+            }
+          ]
+        },
+        {
+          "id": "header-cta",
+          "type": "button",
+          "text": "Prendre RDV",
+          "url": "#",
+          "className": "cta-btn"
+        }
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "section",
+      "className": "hero",
+      "content": [
+        {
+          "id": "hero-content",
+          "type": "heroContent",
+          "title": "Retrouvez l'harmonie naturelle",
+          "subtitle": "Découvrez les bienfaits millénaires de l'Ayurveda pour équilibrer votre corps et votre esprit",
+          "buttonText": "Découvrir nos soins",
+          "buttonLink": "#"
+        },
+        {
+          "id": "hero-image",
+          "type": "heroImage",
+          "src": "https://images.unsplash.com/photo-1600334129128-685c5582fd35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+          "alt": "Ayurvedic treatment"
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "type": "section",
+      "className": "services",
+      "content": [
+        {
+          "id": "services-header",
+          "type": "sectionHeader",
+          "title": "Nos soins ayurvédiques",
+          "subtitle": "Des traitements personnalisés pour harmoniser votre énergie vitale et restaurer l'équilibre naturel"
+        },
+        {
+          "id": "services-container",
+          "type": "servicesContainer",
+          "items": [
+            {
+              "id": "service-0",
+              "type": "serviceCard",
+              "title": "Abhyanga",
+              "description": "Un massage complet du corps avec des huiles chaudes médicinales, personnalisé selon votre constitution ayurvédique.",
+              "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+              "imageAlt": "Abhyanga massage",
+              "duration": "90 min",
+              "price": "120€",
+              "linkText": "Découvrir →",
+              "linkUrl": "#"
+            },
+            {
+              "id": "service-1",
+              "type": "serviceCard",
+              "title": "Shirodhara",
+              "description": "Un soin d'exception où un filet d'huile tiède coule sur le front, apaisant le système nerveux et harmonisant les énergies mentales.",
+              "image": "https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+              "imageAlt": "Shirodhara treatment",
+              "duration": "60 min",
+              "price": "140€",
+              "linkText": "Découvrir →",
+              "linkUrl": "#"
+            },
+            {
+              "id": "service-2",
+              "type": "serviceCard",
+              "title": "Consultation Dosha",
+              "description": "Découvrez votre constitution unique et recevez des recommandations personnalisées pour optimiser votre bien-être quotidien.",
+              "image": "https://images.unsplash.com/photo-1598901847921-263465b67fb9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+              "imageAlt": "Consultation ayurvedique",
+              "duration": "75 min",
+              "price": "95€",
+              "linkText": "Découvrir →",
+              "linkUrl": "#"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "philosophy",
+      "type": "section",
+      "className": "philosophy",
+      "content": [
+        {
+          "id": "philosophy-images",
+          "type": "imageGallery",
+          "items": [
+            {
+              "id": "philosophy-img-0",
+              "type": "image",
+              "src": "https://images.unsplash.com/photo-1519315901367-f34ff9154487?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+              "alt": "Ayurvedic herbs",
+              "className": "philosophy-img-1"
+            },
+            {
+              "id": "philosophy-img-1",
+              "type": "image",
+              "src": "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+              "alt": "Ayurvedic oils",
+              "className": "philosophy-img-2"
+            }
+          ]
+        },
+        {
+          "id": "philosophy-content",
+          "type": "richText",
+          "title": "Notre philosophie",
+          "paragraphs": [
+            "L'Ayurveda est une science holistique millénaire qui considère chaque individu comme unique. Notre approche intègre cette sagesse ancestrale dans un contexte moderne, créant un équilibre parfait entre tradition et innovation.",
+            "Nous croyons en un accompagnement personnalisé qui reconnaît l'interconnexion du corps, de l'esprit et de l'âme dans le processus de guérison et de bien-être."
+          ]
+        },
+        {
+          "id": "principles-container",
+          "type": "cardsContainer",
+          "items": [
+            {
+              "id": "principle-0",
+              "type": "card",
+              "icon": "🌿",
+              "title": "Naturel",
+              "description": "Des remèdes et soins 100% naturels, respectueux du corps et de l'environnement."
+            },
+            {
+              "id": "principle-1",
+              "type": "card",
+              "icon": "⚖️",
+              "title": "Équilibre",
+              "description": "Harmonisation des doshas pour un bien-être complet et durable."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "testimonials",
+      "type": "section",
+      "className": "testimonials",
+      "content": [
+        {
+          "id": "testimonials-header",
+          "type": "sectionHeader",
+          "title": "Témoignages",
+          "subtitle": "Découvrez ce que nos clients disent de leur expérience avec nos soins ayurvédiques"
+        },
+        {
+          "id": "testimonials-carousel",
+          "type": "testimonialsCarousel",
+          "items": [
+            {
+              "id": "testimonial-0",
+              "type": "testimonial",
+              "content": "\"Une expérience transformative qui a profondément changé ma relation avec mon corps et mon bien-être. Je me sens plus équilibrée et centrée après chaque session.\"",
+              "author": {
+                "name": "Sophie Martin",
+                "image": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
+                "rating": 2.5
+              }
+            },
+            {
+              "id": "testimonial-1",
+              "type": "testimonial",
+              "content": "\"Les massages ayurvédiques ont apporté un soulagement incroyable à mes problèmes de dos chroniques. L'approche holistique a fait toute la différence.\"",
+              "author": {
+                "name": "Thomas Dupont",
+                "image": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                "rating": 2.5
+              }
+            },
+            {
+              "id": "testimonial-2",
+              "type": "testimonial",
+              "content": "\"La consultation Dosha a été révélatrice. Comprendre ma constitution m'a permis d'adapter mon alimentation et mon mode de vie avec des résultats incroyables.\"",
+              "author": {
+                "name": "Marie Laurent",
+                "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80",
+                "rating": 2.5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "type": "section",
+      "className": "contact",
+      "content": [
+        {
+          "id": "contact-info",
+          "type": "contactInfo",
+          "title": "Contactez-nous",
+          "description": "Nous serions ravis de vous accompagner dans votre parcours vers l'équilibre et le bien-être holistique. Contactez-nous pour planifier votre consultation personnalisée.",
+          "items": [
+            {
+              "id": "contact-item-0",
+              "icon": "📍",
+              "title": "Adresse",
+              "value": "123 Rue de la Sérénité75001 Paris, France"
+            },
+            {
+              "id": "contact-item-1",
+              "icon": "📞",
+              "title": "Téléphone",
+              "value": "+33 1 23 45 67 89"
+            },
+            {
+              "id": "contact-item-2",
+              "icon": "✉️",
+              "title": "Email",
+              "value": "contact@ayurveda-equilibre.com"
+            }
+          ]
+        },
+        {
+          "id": "contact-form",
+          "type": "form",
+          "fields": [
+            {
+              "id": "form-field-0",
+              "type": "input",
+              "inputType": "text",
+              "label": "Nom complet",
+              "placeholder": "Votre nom",
+              "required": false,
+              "name": "name"
+            },
+            {
+              "id": "form-field-1",
+              "type": "input",
+              "inputType": "email",
+              "label": "Email",
+              "placeholder": "Votre email",
+              "required": false,
+              "name": "email"
+            },
+            {
+              "id": "form-field-2",
+              "type": "input",
+              "inputType": "text",
+              "label": "Service souhaité",
+              "placeholder": "Type de soin",
+              "required": false,
+              "name": "service"
+            },
+            {
+              "id": "form-field-3",
+              "type": "textarea",
+              "inputType": "textarea",
+              "label": "Message",
+              "placeholder": "Votre message",
+              "required": false,
+              "name": "message"
+            }
+          ],
+          "submitText": "Envoyer"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "className": "footer",
+      "content": [
+        {
+          "id": "footer-logo",
+          "type": "logo",
+          "text": "Ayurveda Équilibre"
+        },
+        {
+          "id": "footer-description",
+          "type": "text",
+          "content": "Un espace dédié à l'équilibre holistique où la sagesse ancestrale rencontre le bien-être moderne."
+        },
+        {
+          "id": "social-links",
+          "type": "socialLinks",
+          "items": [
+            {
+              "id": "social-link-0",
+              "icon": "📷",
+              "url": "#"
+            },
+            {
+              "id": "social-link-1",
+              "icon": "👍",
+              "url": "#"
+            },
+            {
+              "id": "social-link-2",
+              "icon": "🐦",
+              "url": "#"
+            }
+          ]
+        },
+        {
+          "id": "footer-columns",
+          "type": "footerColumns",
+          "columns": [
+            {
+              "id": "footer-nav-0",
+              "heading": "Navigation",
+              "links": [
+                {
+                  "id": "footer-link-0-0",
+                  "label": "Accueil",
+                  "url": "#accueil"
+                },
+                {
+                  "id": "footer-link-0-1",
+                  "label": "Soins",
+                  "url": "#services"
+                },
+                {
+                  "id": "footer-link-0-2",
+                  "label": "Philosophie",
+                  "url": "#philosophy"
+                },
+                {
+                  "id": "footer-link-0-3",
+                  "label": "Témoignages",
+                  "url": "#testimonials"
+                },
+                {
+                  "id": "footer-link-0-4",
+                  "label": "Contact",
+                  "url": "#contact"
+                }
+              ]
+            },
+            {
+              "id": "footer-nav-1",
+              "heading": "Nos soins",
+              "links": [
+                {
+                  "id": "footer-link-1-0",
+                  "label": "Abhyanga",
+                  "url": "#"
+                },
+                {
+                  "id": "footer-link-1-1",
+                  "label": "Shirodhara",
+                  "url": "#"
+                },
+                {
+                  "id": "footer-link-1-2",
+                  "label": "Consultation Dosha",
+                  "url": "#"
+                },
+                {
+                  "id": "footer-link-1-3",
+                  "label": "Tous nos soins",
+                  "url": "#"
+                }
+              ]
+            },
+            {
+              "id": "footer-nav-2",
+              "heading": "Horaires",
+              "links": [
+                {
+                  "id": "footer-text-2-0",
+                  "label": "Lundi - Vendredi: 9h - 20h",
+                  "isText": true
+                },
+                {
+                  "id": "footer-text-2-1",
+                  "label": "Samedi: 10h - 18h",
+                  "isText": true
+                },
+                {
+                  "id": "footer-text-2-2",
+                  "label": "Dimanche: Fermé",
+                  "isText": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "footer-copyright",
+          "type": "copyright",
+          "text": "© 2025 Ayurveda Équilibre. Tous droits réservés."
+        }
+      ]
+    }
+  ],
+  "scripts": [
+    "\n        document.addEventListener('DOMContentLoaded', function() {\n            // Curseur personnalisé\n            const cursor = document.querySelector('.custom-cursor');\n            const links = document.querySelectorAll('a, button, .service-card, .principle');\n            \n            document.addEventListener('mousemove', function(e) {\n                cursor.style.left = e.clientX + 'px';\n                cursor.style.top = e.clientY + 'px';\n            });\n            \n            links.forEach(link => {\n                link.addEventListener('mouseenter', function() {\n                    cursor.classList.add('expand');\n                });\n                \n                link.addEventListener('mouseleave', function() {\n                    cursor.classList.remove('expand');\n                });\n            });\n            \n            // Menu mobile\n            const mobileToggle = document.querySelector('.mobile-toggle');\n            const navMenu = document.querySelector('.nav-menu');\n            \n            mobileToggle.addEventListener('click', function() {\n                this.classList.toggle('active');\n                navMenu.classList.toggle('active');\n            });\n            \n            // Navigation fluide\n            document.querySelectorAll('a[href^=\"#\"]').forEach(anchor => {\n                anchor.addEventListener('click', function(e) {\n                    e.preventDefault();\n                    \n                    // Fermer le menu mobile si ouvert\n                    mobileToggle.classList.remove('active');\n                    navMenu.classList.remove('active');\n                    \n                    const targetId = this.getAttribute('href');\n                    const targetElement = document.querySelector(targetId);\n                    \n                    if (targetElement) {\n                        window.scrollTo({\n                            top: targetElement.offsetTop - 80,\n                            behavior: 'smooth'\n                        });\n                    }\n                });\n            });\n            \n            // Contrôles de carousel simples\n            const carousel = document.querySelector('.testimonials-carousel');\n            const prevBtn = document.querySelector('.control-btn.prev');\n            const nextBtn = document.querySelector('.control-btn.next');\n            const cardWidth = document.querySelector('.testimonial-card').offsetWidth + 32; // +margin\n            \n            let position = 0;\n            const maxPosition = carousel.children.length * cardWidth - carousel.offsetWidth;\n            \n            prevBtn.addEventListener('click', function() {\n                position = Math.max(position - cardWidth, 0);\n                carousel.style.transform = `translateX(-${position}px)`;\n                carousel.style.transition = 'transform 0.5s ease';\n            });\n            \n            nextBtn.addEventListener('click', function() {\n                position = Math.min(position + cardWidth, maxPosition);\n                carousel.style.transform = `translateX(-${position}px)`;\n                carousel.style.transition = 'transform 0.5s ease';\n            });\n            \n            // Animation au défilement\n            const observerOptions = {\n                root: null,\n                rootMargin: '0px',\n                threshold: 0.1\n            };\n            \n            const observer = new IntersectionObserver((entries, observer) => {\n                entries.forEach(entry => {\n                    if (entry.isIntersecting) {\n                        entry.target.style.opacity = '1';\n                        entry.target.style.transform = 'translateY(0)';\n                        observer.unobserve(entry.target);\n                    }\n                });\n            }, observerOptions);\n            \n            const animatedElements = document.querySelectorAll('.service-card, .philosophy-img-1, .philosophy-img-2, .principle, .testimonial-card');\n            \n            animatedElements.forEach(el => {\n                el.style.opacity = '0';\n                el.style.transform = 'translateY(30px)';\n                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';\n                observer.observe(el);\n            });\n        });\n    "
+  ]
+}

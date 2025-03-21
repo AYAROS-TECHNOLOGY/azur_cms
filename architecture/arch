@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <!-- Fond -->
+  <rect width="800" height="500" fill="#f9f5f0" rx="10" ry="10"/>
+  
+  <!-- Couche Interface Utilisateur -->
+  <rect x="50" y="40" width="700" height="120" rx="10" ry="10" fill="#0a4b44" opacity="0.9"/>
+  <text x="400" y="80" font-family="'Montserrat', sans-serif" font-size="24" fill="white" text-anchor="middle">Interface Back-Office</text>
+  
+  <!-- Composants interface -->
+  <rect x="80" y="100" width="120" height="40" rx="5" ry="5" fill="white" opacity="0.9"/>
+  <text x="140" y="125" font-family="'Montserrat', sans-serif" font-size="14" fill="#0a4b44" text-anchor="middle">Éditeur Visuel</text>
+  
+  <rect x="220" y="100" width="120" height="40" rx="5" ry="5" fill="white" opacity="0.9"/>
+  <text x="280" y="125" font-family="'Montserrat', sans-serif" font-size="14" fill="#0a4b44" text-anchor="middle">Gestionnaire Pages</text>
+  
+  <rect x="360" y="100" width="120" height="40" rx="5" ry="5" fill="white" opacity="0.9"/>
+  <text x="420" y="125" font-family="'Montserrat', sans-serif" font-size="14" fill="#0a4b44" text-anchor="middle">Gestion Média</text>
+  
+  <rect x="500" y="100" width="120" height="40" rx="5" ry="5" fill="white" opacity="0.9"/>
+  <text x="560" y="125" font-family="'Montserrat', sans-serif" font-size="14" fill="#0a4b44" text-anchor="middle">Éditeur Thème</text>
+  
+  <!-- Couche API -->
+  <rect x="50" y="190" width="700" height="90" rx="10" ry="10" fill="#d4a039" opacity="0.9"/>
+  <text x="400" y="230" font-family="'Montserrat', sans-serif" font-size="24" fill="white" text-anchor="middle">API Serverless</text>
+  
+  <!-- Ligne de connexion entre UI et API -->
+  <path d="M400 160 L400 190" stroke="#333" stroke-width="3" stroke-dasharray="5,5"/>
+  
+  <!-- Couche Stockage -->
+  <rect x="50" y="310" width="700" height="150" rx="10" ry="10" fill="#1f332e" opacity="0.9"/>
+  <text x="400" y="350" font-family="'Montserrat', sans-serif" font-size="24" fill="white" text-anchor="middle">Stockage</text>
+  
+  <!-- Connexion entre API et Stockage -->
+  <path d="M400 280 L400 310" stroke="#333" stroke-width="3" stroke-dasharray="5,5"/>
+  
+  <!-- Composants stockage -->
+  <rect x="100" y="380" width="180" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
+  <text x="190" y="413" font-family="'Montserrat', sans-serif" font-size="16" fill="#1f332e" text-anchor="middle">Structure du Site</text>
+  
+  <rect x="310" y="380" width="180" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
+  <text x="400" y="413" font-family="'Montserrat', sans-serif" font-size="16" fill="#1f332e" text-anchor="middle">Versions & Historique</text>
+  
+  <rect x="520" y="380" width="180" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
+  <text x="610" y="413" font-family="'Montserrat', sans-serif" font-size="16" fill="#1f332e" text-anchor="middle">Médias & Ressources</text>
+</svg>
