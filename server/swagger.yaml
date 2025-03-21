@@ -1,0 +1,906 @@
+openapi: 3.0.0
+info:
+  title: Ayurveda Équilibre CMS API
+  description: API pour le CMS d'Ayurveda Équilibre
+  version: 1.0.0
+  contact:
+    email: contact@ayurveda-equilibre.com
+
+servers:
+  - url: http://localhost:3001/api
+    description: Serveur de développement local
+  - url: https://api.ayurveda-equilibre.com
+    description: Serveur de production
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        role:
+          type: string
+          
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+          
+    Page:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        path:
+          type: string
+        template:
+          type: string
+        isPublished:
+          type: boolean
+          
+    PageContent:
+      type: object
+      properties:
+        title:
+          type: string
+        meta:
+          type: object
+          properties:
+            description:
+              type: string
+            keywords:
+              type: string
+        sections:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              type:
+                type: string
+              className:
+                type: string
+              content:
+                type: array
+                items:
+                  type: object
+                  
+    CreatePageRequest:
+      type: object
+      required:
+        - pageContent
+        - pageId
+      properties:
+        pageContent:
+          $ref: '#/components/schemas/PageContent'
+        pageId:
+          type: string
+        addToNavigation:
+          type: string
+          enum: [main, footer, null]
+          
+    SiteStructure:
+      type: object
+      properties:
+        pages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Page'
+        navigation:
+          type: object
+          properties:
+            main:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  label:
+                    type: string
+                  path:
+                    type: string
+                    
+    Theme:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        colors:
+          type: object
+          properties:
+            primary:
+              type: string
+            accent:
+              type: string
+            light:
+              type: string
+            dark:
+              type: string
+            neutral:
+              type: string
+        fonts:
+          type: object
+          properties:
+            heading:
+              type: string
+            body:
+              type: string
+              
+    MediaFile:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        contentType:
+          type: string
+        size:
+          type: number
+        uploadedAt:
+          type: string
+          format: date-time
+        uploadedBy:
+          type: string
+          
+    MediaUploadRequest:
+      type: object
+      required:
+        - filename
+        - fileContent
+        - contentType
+      properties:
+        filename:
+          type: string
+        fileContent:
+          type: string
+          description: Contenu du fichier encodé en base64
+        contentType:
+          type: string
+        folder:
+          type: string
+          default: images
+          
+    Version:
+      type: object
+      properties:
+        file:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        user:
+          type: string
+          
+    RestoreVersionRequest:
+      type: object
+      required:
+        - versionFile
+        - targetFile
+      properties:
+        versionFile:
+          type: string
+        targetFile:
+          type: string
+
+paths:
+  /auth/login:
+    post:
+      summary: Authentification utilisateur
+      description: Permet à un utilisateur de se connecter au CMS
+      tags:
+        - Authentification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Connexion réussie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Identifiants invalides
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /site-structure:
+    get:
+      summary: Récupérer la structure du site
+      description: Récupère la structure complète du site avec toutes les pages et la navigation
+      tags:
+        - Structure du site
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Structure du site récupérée avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteStructure'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Mettre à jour la structure du site
+      description: Met à jour la structure complète du site
+      tags:
+        - Structure du site
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteStructure'
+      responses:
+        '200':
+          description: Structure mise à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /pages/{pageId}:
+    get:
+      summary: Récupérer une page
+      description: Récupère le contenu d'une page spécifique
+      tags:
+        - Pages
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant de la page
+      responses:
+        '200':
+          description: Page récupérée avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageContent'
+        '404':
+          description: Page non trouvée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Mettre à jour une page
+      description: Met à jour le contenu d'une page spécifique
+      tags:
+        - Pages
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant de la page
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageContent'
+      responses:
+        '200':
+          description: Page mise à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Page non trouvée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Supprimer une page
+      description: Supprime une page spécifique
+      tags:
+        - Pages
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pageId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant de la page
+      responses:
+        '200':
+          description: Page supprimée avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Page non trouvée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /pages:
+    post:
+      summary: Créer une nouvelle page
+      description: Crée une nouvelle page et l'ajoute optionnellement à la navigation
+      tags:
+        - Pages
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePageRequest'
+      responses:
+        '201':
+          description: Page créée avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  pageId:
+                    type: string
+        '409':
+          description: Une page avec cet ID existe déjà
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /media:
+    get:
+      summary: Récupérer la liste des médias
+      description: Récupère la liste de tous les fichiers médias
+      tags:
+        - Médias
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Liste des médias récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MediaFile'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /media/upload:
+    post:
+      summary: Télécharger un média
+      description: Télécharge un nouveau fichier média
+      tags:
+        - Médias
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaUploadRequest'
+      responses:
+        '201':
+          description: Fichier téléchargé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  filename:
+                    type: string
+                  url:
+                    type: string
+        '400':
+          description: Données invalides
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /media/{filename}:
+    delete:
+      summary: Supprimer un média
+      description: Supprime un fichier média spécifique
+      tags:
+        - Médias
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Nom du fichier à supprimer
+      responses:
+        '200':
+          description: Fichier supprimé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Fichier non trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /themes/active:
+    get:
+      summary: Récupérer le thème actif
+      description: Récupère les détails du thème actuellement actif
+      tags:
+        - Thèmes
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Thème récupéré avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Theme'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Mettre à jour le thème actif
+      description: Met à jour le thème actuellement actif
+      tags:
+        - Thèmes
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Theme'
+      responses:
+        '200':
+          description: Thème mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /themes:
+    get:
+      summary: Récupérer tous les thèmes
+      description: Récupère la liste de tous les thèmes disponibles
+      tags:
+        - Thèmes
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Thèmes récupérés avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Theme'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Créer un nouveau thème
+      description: Crée un nouveau thème
+      tags:
+        - Thèmes
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - theme
+              properties:
+                id:
+                  type: string
+                theme:
+                  $ref: '#/components/schemas/Theme'
+      responses:
+        '201':
+          description: Thème créé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  id:
+                    type: string
+        '409':
+          description: Un thème avec cet ID existe déjà
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /themes/{themeId}/export:
+    get:
+      summary: Exporter un thème
+      description: Récupère un thème au format exportable
+      tags:
+        - Thèmes
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: themeId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant du thème à exporter
+      responses:
+        '200':
+          description: Thème prêt pour l'export
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  theme:
+                    $ref: '#/components/schemas/Theme'
+                  downloadUrl:
+                    type: string
+        '404':
+          description: Thème non trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /versions:
+    get:
+      summary: Récupérer l'historique des versions
+      description: Récupère l'historique de toutes les versions
+      tags:
+        - Versions
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Versions récupérées avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Version'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /versions/restore:
+    post:
+      summary: Restaurer une version
+      description: Restaure une version précédente d'un fichier
+      tags:
+        - Versions
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestoreVersionRequest'
+      responses:
+        '200':
+          description: Version restaurée avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Version non trouvée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /publish:
+    post:
+      summary: Publier le site
+      description: Génère et publie le site statique
+      tags:
+        - Publication
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Site publié avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Non autorisé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erreur serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
