@@ -1,4 +1,3 @@
-// functions/src/generators/siteGenerator.js
 const fs = require('fs-extra');
 const path = require('path');
 const os = require('os');

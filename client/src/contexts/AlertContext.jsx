@@ -1,4 +1,3 @@
-// client/src/contexts/AlertContext.jsx
 import React, { useState, useContext, createContext } from 'react';
 
 // Create the Alert context

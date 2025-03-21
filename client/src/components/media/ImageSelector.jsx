@@ -1,4 +1,3 @@
-// client/src/components/media/ImageSelector.jsx
 import React, { useState, useEffect } from 'react';
 import {
   Dialog,

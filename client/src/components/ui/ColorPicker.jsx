@@ -1,4 +1,3 @@
-// client/src/components/ui/ColorPicker.jsx
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Grid, Typography, Tabs, Tab } from '@mui/material';
 import { styled } from '@mui/material/styles';

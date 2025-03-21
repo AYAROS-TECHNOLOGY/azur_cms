@@ -1,4 +1,3 @@
-// functions/src/utils/sitemapGenerator.js
 const { Storage } = require('@google-cloud/storage');
 const os = require('os');
 const path = require('path');

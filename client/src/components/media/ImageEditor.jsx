@@ -1,4 +1,3 @@
-// client/src/components/media/ImageEditor.jsx
 import React, { useState } from 'react';
 import {
   Box,

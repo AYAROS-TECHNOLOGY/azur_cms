@@ -1,4 +1,3 @@
-// functions/src/utils/htmlParser.js
 const cheerio = require('cheerio');
 const { v4: uuidv4 } = require('uuid');
 

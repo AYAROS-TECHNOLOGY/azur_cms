@@ -1,4 +1,3 @@
-// client/src/components/media/MediaManager.jsx
 import React, { useState, useCallback, useEffect } from 'react';
 import {
   Box,
