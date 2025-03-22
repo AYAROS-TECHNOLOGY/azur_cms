@@ -4,7 +4,7 @@
     "description": "CMS léger pour le site Ayurveda Équilibre",
     "main": "index.js",
     "scripts": {
-        "start": "cd client && npm start & cd server && nodemon -e js local-server.js",
+        "start": "concurrently \"cd client && npm start\" \"cd server && nodemon -e js local-server.js\"",
         "client": "cd client && npm start",
         "server": "nodemon -e js server/local-server.js",
         "build:client": "cd client && npm run build",
@@ -12,7 +12,8 @@
         "build": "npm run build:client && npm run build:functions",
         "deploy": "firebase deploy",
         "init-content": "node server/init-content.js",
-        "test": "jest"
+        "test": "jest",
+        "clean": "rmdir /s /q node_modules && del package-lock.json"
     },
     "keywords": [
         "cms",
@@ -22,6 +23,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
+        "hours": "^0.1.0",
         "nodemon": "^2.0.22",
         "swagger-ui-express": "^5.0.1",
         "yamljs": "^0.3.0"
@@ -32,7 +34,7 @@
         "jest": "^29.5.0"
     },
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=23.0.0"
     },
     "workspaces": [
         "client",
