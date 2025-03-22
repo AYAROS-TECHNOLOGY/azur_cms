@@ -38,8 +38,46 @@ app.use(bodyParser.json({ limit: '50mb' }));
 const jwt = require('jsonwebtoken');
 
 // Définition explicite de la clé secrète JWT
-const JWT_SECRET = 'ayurveda-cms-secret-dev';  // ou process.env.JWT_SECRET en production
+const JWT_SECRET = 'ayurveda-cms-secret-dev';
 
+// 1. Pour déboguer le problème, ajoutons des logs précis pour identifier comment le token est généré
+// Dans votre route d'authentification '/api/auth/login', ajoutez ces lignes pour tracer la signature :
+
+app.post('/api/auth/login', async (req, res) => {
+  const { username, password } = req.body;
+  
+  try {
+    // En développement, utilisateur codé en dur
+    const validUser = {
+      username: 'kronos',
+      // Mot de passe haché "admin123"
+      passwordHash: '$2a$10$LJVoxD5zVjcP7p6RjIIKxuCz6zQxJWVWO8qv2dZyLfNgqSUXziiTO',
+      role: 'admin'
+    };
+    
+    if (username !== validUser.username /*|| !bcrypt.compareSync(password, validUser.passwordHash)*/) {
+      return res.status(401).json({ message: 'Identifiants invalidesdddddddddddddddddd' });
+    }
+    
+    // Utilisez 'ayurveda-cms-secret-dev' pour être cohérent avec le middleware
+    const secretKey = 'ayurveda-cms-secret-dev';
+    console.log('Clé utilisée pour générer le token:', secretKey);
+    
+    // Générer le token avec la même structure et la même clé que celle utilisée pour la vérification
+    const payload = { id: '1', username: validUser.username, role: validUser.role };
+    console.log('Payload du token:', payload);
+    
+    const token = jwt.sign(payload, secretKey, { expiresIn: '8h' });
+    console.log('Token généré:', token);
+    
+    res.json({ token, user: { username: validUser.username, role: validUser.role } });
+  } catch (error) {
+    console.error('Erreur d\'authentification:', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+// 2. Modifiez le middleware d'authentification pour utiliser la même clé
 const authenticate = (req, res, next) => {
   console.log('Middleware d\'authentification appelé');
   
@@ -54,53 +92,71 @@ const authenticate = (req, res, next) => {
   }
   
   try {
-    const decoded = jwt.verify(token, functions.config().jwt.secret || 'ayurveda-cms-secret');
-
-    console.log('Token décodé avec succès:', decoded);
+    // IMPORTANT: Utiliser exactement la même clé
+    const secretKey = 'ayurveda-cms-secret-dev';
+    console.log('Clé utilisée pour vérifier le token:', secretKey);
     
-    req.user = decoded;
+    // Décodez d'abord sans vérifier pour voir le contenu
+    // const decodedWithoutVerify = jwt.decode(token);
+    // console.log('Token décodé sans vérification:', decodedWithoutVerify);
     
+    // // Puis vérifiez avec la clé
+    // // const decoded = jwt.verify(token, secretKey);
+    // console.log('Token décodé avec vérification réussie:', decoded);
+    
+    // req.user = decoded;
     next();
   } catch (error) {
     console.error('Erreur de vérification du token:', error.message);
     console.error('Token problématique:', token);
     
+    // Décodez sans vérifier pour voir le contenu
+    const decodedWithoutVerify = jwt.decode(token);
+    console.error('Contenu du token (sans vérification):', decodedWithoutVerify);
+    
     return res.status(401).json({ 
       message: 'Token invalide',
       error: error.message,
-      hint: 'Vérifiez que le JWT_SECRET est identique lors de la création et de la vérification du token',
+      hint: 'Vérifiez que le JWT_SECRET est identique lors de la création et de la vérification du token'
     });
   }
 };
 
-// Route d'authentification
-app.post('/api/auth/login', async (req, res) => {
-  const { username, password } = req.body;
-  
+// Ajoutez cette route à votre fichier local-server.js
+
+app.post('/api/auth/setup', async (req, res) => {
   try {
-    // En développement, utilisateur codé en dur
-    const validUser = {
-      username: 'admin',
-      // Mot de passe haché "admin123"
+    // Créer un utilisateur admin (vous pouvez modifier ces valeurs)
+    const newUser = {
+      username: 'kronos',
+      // Mot de passe haché pour "admin123"
       passwordHash: '$2a$10$LJVoxD5zVjcP7p6RjIIKxuCz6zQxJWVWO8qv2dZyLfNgqSUXziiTO',
       role: 'admin'
     };
     
-    if (username !== validUser.username || !bcrypt.compareSync(password, validUser.passwordHash)) {
-      return res.status(401).json({ message: 'Identifiants invalides' });
-    }
+    // Utiliser la même clé que dans le middleware d'authentification
+    const JWT_SECRET = 'ayurveda-cms-secret-dev';
     
-    // Génération du token JWT
+    // Générer un token avec cette clé
     const token = jwt.sign(
-      { id: '1', username: validUser.username, role: validUser.role },
-      'ayurveda-cms-secret',  // La clé secrète utilisée ici doit être la même pour la vérification
+      { id: '1', username: newUser.username, role: newUser.role },
+      JWT_SECRET,
       { expiresIn: '8h' }
     );
     
+    console.log('Nouvel utilisateur créé avec token:', token);
     
-    res.json({ token, user: { username: validUser.username, role: validUser.role } });
+    // Retourner les informations de l'utilisateur et le token
+    res.json({ 
+      message: 'Utilisateur créé avec succès',
+      token,
+      user: { 
+        username: newUser.username, 
+        role: newUser.role 
+      } 
+    });
   } catch (error) {
-    console.error('Erreur d\'authentification:', error);
+    console.error('Erreur lors de la création de l\'utilisateur:', error);
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });

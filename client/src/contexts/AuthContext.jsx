@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }) => {
       setAuthError(null);
       
       // Option 1: Utiliser une API de connexion réelle
-      /*
+      
       const response = await api.post('/auth/login', credentials);
       if (response.data && response.data.token) {
         const token = response.data.token;
@@ -94,28 +94,28 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         return { success: true };
       }
-      */
       
-      // Option 2: Mode développement (mock)
-      if (credentials.username === 'admin' && credentials.password === 'admin123') {
-        const mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIn0.8tat9ElH1rLdj8rjX4nFJP5x9y17djLYtVJgTyjJGNE';
+      
+      // // Option 2: Mode développement (mock)
+      // if (credentials.username === 'admin' && credentials.password === 'admin123') {
+      //   const mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIn0.8tat9ElH1rLdj8rjX4nFJP5x9y17djLYtVJgTyjJGNE';
         
-        localStorage.setItem('auth_token', mockToken);
-        localStorage.setItem('token', mockToken);
+      //   localStorage.setItem('auth_token', mockToken);
+      //   localStorage.setItem('token', mockToken);
         
-        const userData = { username: 'admin', role: 'admin' };
-        setUser(userData);
-        setIsAuthenticated(true);
+      //   const userData = { username: 'admin', role: 'admin' };
+      //   setUser(userData);
+      //   setIsAuthenticated(true);
         
-        // Vérifier que le token a bien été stocké
-        const storedToken = localStorage.getItem('auth_token');
-        console.log('Token stocké avec succès:', !!storedToken);
+      //   // Vérifier que le token a bien été stocké
+      //   const storedToken = localStorage.getItem('auth_token');
+      //   console.log('Token stocké avec succès:', !!storedToken);
         
-        return { success: true };
-      }
+      //   return { success: true };
+      // }
       
       setAuthError('Identifiants invalides');
-      return { success: false, message: 'Identifiants invalides' };
+      return { success: false, message: 'Identifiants invalidesaaaaa' };
     } catch (error) {
       console.error('Login error:', error);
       setAuthError('Erreur de connexion, veuillez réessayer');

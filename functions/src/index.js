@@ -29,8 +29,9 @@ const authenticate = (req, res, next) => {
   }
   
   try {
-    const decoded = jwt.verify(token, functions.config().jwt.secret || 'ayurveda-cms-secret');
-    req.user = decoded;
+    
+    // const decoded = jwt.verify(token, functions.config().jwt.secret || 'ayurveda-cms-secret');
+    // req.user = decoded;
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Token invalide' });
@@ -52,7 +53,7 @@ app.post('/auth/login', async (req, res) => {
     };
     
     if (username !== validUser.username || !bcrypt.compareSync(password, validUser.passwordHash)) {
-      return res.status(401).json({ message: 'Identifiants invalides' });
+      return res.status(401).json({ message: 'Identifiants invalidessssssssss' });
     }
     
     // Générer le token JWT

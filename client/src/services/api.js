@@ -91,7 +91,7 @@ export const login = async (credentials) => {
     }
     return response.data;
   } catch (error) {
-    return handleApiError(error, { success: false, message: 'Identifiants invalides' });
+    return handleApiError(error, { success: false, message: 'Identifiants invalidesXXXX' });
   }
 };
 
