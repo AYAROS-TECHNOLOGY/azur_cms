@@ -1,4 +1,3 @@
-// setup.js - Script d'initialisation du CMS
 const fs = require('fs-extra');
 const path = require('path');
 const cheerio = require('cheerio');
