@@ -239,7 +239,7 @@ const Layout = () => {
       >
         <DrawerHeader>
           <Box sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
-            <img src="/logo.png" alt="Logo" style={{ height: 40 }} />
+            <img src="../client/public/cms_12470051.png" alt="Logo" style={{ height: 40 }} />
             <Typography variant="h6" sx={{ ml: 1, color: 'primary.main' }}>
               Ayurveda CMS
             </Typography>

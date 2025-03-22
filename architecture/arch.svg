@@ -1,45 +1,66 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-  <!-- Fond -->
-  <rect width="800" height="500" fill="#f9f5f0" rx="10" ry="10"/>
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f9f5f0" />
   
-  <!-- Couche Interface Utilisateur -->
-  <rect x="50" y="40" width="700" height="120" rx="10" ry="10" fill="#0a4b44" opacity="0.9"/>
-  <text x="400" y="80" font-family="'Montserrat', sans-serif" font-size="24" fill="white" text-anchor="middle">Interface Back-Office</text>
+  <!-- Title -->
+  <text x="400" y="40" fill="#0a4b44" font-family="Arial" font-size="24" text-anchor="middle" font-weight="bold">Architecture du CMS Ayurveda Équilibre</text>
   
-  <!-- Composants interface -->
-  <rect x="80" y="100" width="120" height="40" rx="5" ry="5" fill="white" opacity="0.9"/>
-  <text x="140" y="125" font-family="'Montserrat', sans-serif" font-size="14" fill="#0a4b44" text-anchor="middle">Éditeur Visuel</text>
+  <!-- Client Container -->
+  <rect x="50" y="80" width="300" height="380" fill="#fff" stroke="#0a4b44" stroke-width="2" rx="10" />
+  <text x="200" y="110" fill="#0a4b44" font-family="Arial" font-size="18" text-anchor="middle" font-weight="bold">Front-end (React)</text>
   
-  <rect x="220" y="100" width="120" height="40" rx="5" ry="5" fill="white" opacity="0.9"/>
-  <text x="280" y="125" font-family="'Montserrat', sans-serif" font-size="14" fill="#0a4b44" text-anchor="middle">Gestionnaire Pages</text>
+  <!-- Client Components -->
+  <rect x="70" y="130" width="260" height="50" fill="#d4a039" fill-opacity="0.2" stroke="#d4a039" stroke-width="1" rx="5" />
+  <text x="200" y="160" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Dashboard</text>
   
-  <rect x="360" y="100" width="120" height="40" rx="5" ry="5" fill="white" opacity="0.9"/>
-  <text x="420" y="125" font-family="'Montserrat', sans-serif" font-size="14" fill="#0a4b44" text-anchor="middle">Gestion Média</text>
+  <rect x="70" y="190" width="260" height="50" fill="#d4a039" fill-opacity="0.2" stroke="#d4a039" stroke-width="1" rx="5" />
+  <text x="200" y="220" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Éditeur de pages</text>
   
-  <rect x="500" y="100" width="120" height="40" rx="5" ry="5" fill="white" opacity="0.9"/>
-  <text x="560" y="125" font-family="'Montserrat', sans-serif" font-size="14" fill="#0a4b44" text-anchor="middle">Éditeur Thème</text>
+  <rect x="70" y="250" width="260" height="50" fill="#d4a039" fill-opacity="0.2" stroke="#d4a039" stroke-width="1" rx="5" />
+  <text x="200" y="280" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Gestionnaire de médias</text>
   
-  <!-- Couche API -->
-  <rect x="50" y="190" width="700" height="90" rx="10" ry="10" fill="#d4a039" opacity="0.9"/>
-  <text x="400" y="230" font-family="'Montserrat', sans-serif" font-size="24" fill="white" text-anchor="middle">API Serverless</text>
+  <rect x="70" y="310" width="260" height="50" fill="#d4a039" fill-opacity="0.2" stroke="#d4a039" stroke-width="1" rx="5" />
+  <text x="200" y="340" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Éditeur de thème</text>
   
-  <!-- Ligne de connexion entre UI et API -->
-  <path d="M400 160 L400 190" stroke="#333" stroke-width="3" stroke-dasharray="5,5"/>
+  <rect x="70" y="370" width="260" height="50" fill="#d4a039" fill-opacity="0.2" stroke="#d4a039" stroke-width="1" rx="5" />
+  <text x="200" y="400" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Gestion des versions</text>
   
-  <!-- Couche Stockage -->
-  <rect x="50" y="310" width="700" height="150" rx="10" ry="10" fill="#1f332e" opacity="0.9"/>
-  <text x="400" y="350" font-family="'Montserrat', sans-serif" font-size="24" fill="white" text-anchor="middle">Stockage</text>
+  <!-- Firebase Container -->
+  <rect x="450" y="80" width="300" height="380" fill="#fff" stroke="#0a4b44" stroke-width="2" rx="10" />
+  <text x="600" y="110" fill="#0a4b44" font-family="Arial" font-size="18" text-anchor="middle" font-weight="bold">Back-end (Firebase)</text>
   
-  <!-- Connexion entre API et Stockage -->
-  <path d="M400 280 L400 310" stroke="#333" stroke-width="3" stroke-dasharray="5,5"/>
+  <!-- Firebase Components -->
+  <rect x="470" y="130" width="260" height="50" fill="#0a4b44" fill-opacity="0.2" stroke="#0a4b44" stroke-width="1" rx="5" />
+  <text x="600" y="160" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Cloud Functions</text>
   
-  <!-- Composants stockage -->
-  <rect x="100" y="380" width="180" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
-  <text x="190" y="413" font-family="'Montserrat', sans-serif" font-size="16" fill="#1f332e" text-anchor="middle">Structure du Site</text>
+  <rect x="470" y="190" width="260" height="50" fill="#0a4b44" fill-opacity="0.2" stroke="#0a4b44" stroke-width="1" rx="5" />
+  <text x="600" y="220" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Cloud Storage</text>
   
-  <rect x="310" y="380" width="180" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
-  <text x="400" y="413" font-family="'Montserrat', sans-serif" font-size="16" fill="#1f332e" text-anchor="middle">Versions & Historique</text>
+  <rect x="470" y="250" width="260" height="50" fill="#0a4b44" fill-opacity="0.2" stroke="#0a4b44" stroke-width="1" rx="5" />
+  <text x="600" y="280" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Authentification</text>
   
-  <rect x="520" y="380" width="180" height="50" rx="5" ry="5" fill="white" opacity="0.8"/>
-  <text x="610" y="413" font-family="'Montserrat', sans-serif" font-size="16" fill="#1f332e" text-anchor="middle">Médias & Ressources</text>
+  <rect x="470" y="310" width="260" height="50" fill="#0a4b44" fill-opacity="0.2" stroke="#0a4b44" stroke-width="1" rx="5" />
+  <text x="600" y="340" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Site statique généré</text>
+  
+  <rect x="470" y="370" width="260" height="50" fill="#0a4b44" fill-opacity="0.2" stroke="#0a4b44" stroke-width="1" rx="5" />
+  <text x="600" y="400" fill="#1f332e" font-family="Arial" font-size="14" text-anchor="middle">Hosting</text>
+  
+  <!-- Connecting Arrows -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0a4b44" />
+    </marker>
+  </defs>
+  
+  <line x1="330" y1="155" x2="470" y2="155" stroke="#0a4b44" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="330" y1="215" x2="470" y2="215" stroke="#0a4b44" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="330" y1="275" x2="470" y2="275" stroke="#0a4b44" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="330" y1="335" x2="470" y2="335" stroke="#0a4b44" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="330" y1="395" x2="470" y2="395" stroke="#0a4b44" stroke-width="2" marker-end="url(#arrow)" />
+  
+  <line x1="470" y1="175" x2="330" y2="175" stroke="#d4a039" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="470" y1="235" x2="330" y2="235" stroke="#d4a039" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="470" y1="295" x2="330" y2="295" stroke="#d4a039" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="470" y1="355" x2="330" y2="355" stroke="#d4a039" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="470" y1="415" x2="330" y2="415" stroke="#d4a039" stroke-width="2" marker-end="url(#arrow)" />
 </svg>

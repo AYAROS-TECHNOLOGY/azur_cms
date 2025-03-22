@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 
@@ -13,7 +13,7 @@ const YAML = require('yamljs');
 const PORT = process.env.PORT || 3001;
 const DATA_DIR = path.join(__dirname, 'data');
 const MEDIA_DIR = path.join(DATA_DIR, 'media');
-const JWT_SECRET = 'ayurveda-cms-secret-dev';
+// const JWT_SECRET = 'ayurveda-cms-secret-dev';
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 
 // Création des répertoires nécessaires
@@ -29,20 +29,47 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 
+
+
+
+
+
 // Middleware d'authentification
+const jwt = require('jsonwebtoken');
+
+// Définition explicite de la clé secrète JWT
+const JWT_SECRET = 'ayurveda-cms-secret-dev';  // ou process.env.JWT_SECRET en production
+
 const authenticate = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
+  console.log('Middleware d\'authentification appelé');
+  
+  const authHeader = req.headers.authorization;
+  console.log('En-tête d\'autorisation:', authHeader);
+  
+  const token = authHeader?.split(' ')[1];
   
   if (!token) {
+    console.log('Aucun token fourni');
     return res.status(401).json({ message: 'Authentification requise' });
   }
   
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, functions.config().jwt.secret || 'ayurveda-cms-secret');
+
+    console.log('Token décodé avec succès:', decoded);
+    
     req.user = decoded;
+    
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Token invalide' });
+    console.error('Erreur de vérification du token:', error.message);
+    console.error('Token problématique:', token);
+    
+    return res.status(401).json({ 
+      message: 'Token invalide',
+      error: error.message,
+      hint: 'Vérifiez que le JWT_SECRET est identique lors de la création et de la vérification du token',
+    });
   }
 };
 
@@ -66,9 +93,10 @@ app.post('/api/auth/login', async (req, res) => {
     // Génération du token JWT
     const token = jwt.sign(
       { id: '1', username: validUser.username, role: validUser.role },
-      JWT_SECRET,
+      'ayurveda-cms-secret',  // La clé secrète utilisée ici doit être la même pour la vérification
       { expiresIn: '8h' }
     );
+    
     
     res.json({ token, user: { username: validUser.username, role: validUser.role } });
   } catch (error) {

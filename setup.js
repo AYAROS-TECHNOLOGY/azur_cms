@@ -40,8 +40,8 @@ async function initialize() {
     
     console.log(chalk.cyan('\nPour accéder au back-office:'));
     console.log(chalk.white('  http://localhost:3000'));
-    console.log(chalk.white('  Utilisateur: admin'));
-    console.log(chalk.white('  Mot de passe: admin123'));
+    console.log(chalk.white('  Utilisateur: kronos'));
+    console.log(chalk.white('  Mot de passe: alpha123'));
     
   } catch (error) {
     console.error(chalk.red('Erreur lors de l\'initialisation:'), error);
