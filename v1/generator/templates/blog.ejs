@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= meta.title %> | <%= settings.siteTitle %></title>
+  <meta name="description" content="<%= meta.description %>">
+  <% if (meta.keywords) { %>
+  <meta name="keywords" content="<%= meta.keywords %>">
+  <% } %>
+  
+  <!-- Favicon -->
+  <% if (settings.favicon) { %>
+  <link rel="icon" href="<%= settings.favicon %>">
+  <% } %>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  
+  <!-- Police de caractères -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <% 
+  const fontFamilies = [];
+  if (theme.fonts.body) fontFamilies.push(theme.fonts.body.split(',')[0]);
+  if (theme.fonts.heading && theme.fonts.heading !== theme.fonts.body) fontFamilies.push(theme.fonts.heading.split(',')[0]);
+  const googleFonts = fontFamilies
+    .filter(font => !font.includes('serif') && !font.includes('Arial') && !font.includes('Helvetica'))
+    .map(font => font.trim().replace(/\s+/g, '+'))
+    .join('&family=');
+  %>
+  <% if (googleFonts) { %>
+  <link href="https://fonts.googleapis.com/css2?family=<%= googleFonts %>:wght@400;500;700&display=swap" rel="stylesheet">
+  <% } %>
+  
+  <style>
+    /* Styles spécifiques aux pages de blog */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .blog-card {
+      border: 1px solid #eaeaea;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .blog-card-image {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .blog-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .blog-card-content {
+      padding: 1.5rem;
+    }
+    
+    .blog-card-date {
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+    
+    .blog-card-title {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+    }
+    
+    .blog-card-excerpt {
+      color: #444;
+      margin-bottom: 1rem;
+    }
+    
+    .blog-card-link {
+      display: inline-block;
+      color: var(--color-primary);
+      font-weight: 500;
+      text-decoration: none;
+    }
+    
+    .blog-card-link:hover {
+      text-decoration: underline;
+    }
+    
+    .blog-sidebar {
+      padding: 1.5rem;
+      border: 1px solid #eaeaea;
+      border-radius: 8px;
+    }
+    
+    .blog-sidebar-title {
+      margin-top: 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--color-primary);
+      font-size: 1.25rem;
+    }
+    
+    .blog-sidebar-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .blog-sidebar-list li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .blog-sidebar-list a {
+      text-decoration: none;
+      color: var(--color-text);
+    }
+    
+    .blog-sidebar-list a:hover {
+      color: var(--color-primary);
+    }
+    
+    @media (min-width: 768px) {
+      .blog-layout {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- En-tête -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <% if (settings.logo) { %>
+        <a href="/" class="logo">
+          <img src="<%= settings.logo %>" alt="<%= settings.siteTitle %>">
+        </a>
+        <% } else { %>
+        <a href="/" class="site-title"><%= settings.siteTitle %></a>
+        <% } %>
+        
+        <!-- Navigation -->
+        <nav class="main-nav">
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/a-propos.html">À propos</a></li>
+            <li><a href="/services.html">Services</a></li>
+            <li><a href="/blog.html" class="active">Blog</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        
+        <!-- Bouton menu mobile -->
+        <button class="menu-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="site-main">
+    <div class="page-header">
+      <div class="container">
+        <h1><%= page.title %></h1>
+        <% if (page.description) { %>
+        <p class="page-description"><%= page.description %></p>
+        <% } %>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="blog-layout">
+        <div class="blog-main">
+          <% 
+          // Extraire les blocs d'article de blog
+          const blogPosts = blocks.filter(b => b.type === 'text' && b.name.toLowerCase().includes('article'));
+          
+          // Extraire les images pour les articles
+          const blogImages = blocks.filter(b => b.type === 'image' && b.name.toLowerCase().includes('article'));
+          
+          // Associer les images aux articles
+          const blogArticles = blogPosts.map(post => {
+            const postId = post.name.replace(/[^0-9]/g, '');
+            const image = blogImages.find(img => img.name.includes(postId));
+            return {
+              ...post,
+              image: image ? image.content : null,
+              date: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000)
+            };
+          });
+          %>
+          
+          <div class="blog-grid">
+            <% blogArticles.forEach(article => { %>
+              <article class="blog-card" id="<%= article.id %>" <%= article.animationAttr %>>
+                <% if (article.image) { %>
+                <div class="blog-card-image">
+                  <img src="<%= article.image.src %>" alt="<%= article.image.alt || '' %>">
+                </div>
+                <% } else { %>
+                <div class="blog-card-image">
+                  <img src="/assets/images/default-blog.jpg" alt="Image par défaut">
+                </div>
+                <% } %>
+                <div class="blog-card-content">
+                  <div class="blog-card-date">
+                    <%= article.date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                  </div>
+                  <h2 class="blog-card-title">
+                    <% 
+                    // Extraire le titre du contenu HTML
+                    const titleMatch = article.processedContent.match(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/i);
+                    const title = titleMatch ? titleMatch[1] : `Article ${article.id}`;
+                    %>
+                    <%= title %>
+                  </h2>
+                  <div class="blog-card-excerpt">
+                    <% 
+                    // Extraire le premier paragraphe comme extrait
+                    const paragraphMatch = article.processedContent.match(/<p[^>]*>(.*?)<\/p>/i);
+                    const excerpt = paragraphMatch 
+                      ? paragraphMatch[1].substring(0, 120) + (paragraphMatch[1].length > 120 ? '...' : '')
+                      : 'Cliquez pour lire cet article.';
+                    %>
+                    <%= excerpt %>
+                  </div>
+                  <a href="#<%= article.id %>" class="blog-card-link">Lire la suite</a>
+                </div>
+              </article>
+            <% }); %>
+          </div>
+          
+          <% if (blogArticles.length === 0) { %>
+            <p>Aucun article de blog n'a été ajouté.</p>
+          <% } %>
+          
+          <!-- Autres blocs de contenu non-articles -->
+          <% 
+          const otherBlocks = blocks.filter(b => 
+            !(b.type === 'text' && b.name.toLowerCase().includes('article')) && 
+            !(b.type === 'image' && b.name.toLowerCase().includes('article'))
+          );
+          %>
+          
+          <% otherBlocks.forEach(block => { %>
+            <div class="content-block" id="<%= block.id %>" <%= block.styleAttr %> <%= block.animationAttr %>>
+              <%- block.processedContent %>
+            </div>
+          <% }); %>
+        </div>
+        
+        <aside class="blog-sidebar">
+          <div class="blog-sidebar-section">
+            <h3 class="blog-sidebar-title">Catégories</h3>
+            <ul class="blog-sidebar-list">
+              <li><a href="#">Actualités</a></li>
+              <li><a href="#">Tutoriels</a></li>
+              <li><a href="#">Guide</a></li>
+              <li><a href="#">Astuces</a></li>
+            </ul>
+          </div>
+          
+          <div class="blog-sidebar-section">
+            <h3 class="blog-sidebar-title">Articles récents</h3>
+            <ul class="blog-sidebar-list">
+              <% blogArticles.slice(0, 5).forEach(article => { %>
+                <% 
+                const titleMatch = article.processedContent.match(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/i);
+                const title = titleMatch ? titleMatch[1] : `Article ${article.id}`;
+                %>
+                <li><a href="#<%= article.id %>"><%= title %></a></li>
+              <% }); %>
+            </ul>
+          </div>
+          
+          <div class="blog-sidebar-section">
+            <h3 class="blog-sidebar-title">Archives</h3>
+            <ul class="blog-sidebar-list">
+              <li><a href="#">Mars 2025</a></li>
+              <li><a href="#">Février 2025</a></li>
+              <li><a href="#">Janvier 2025</a></li>
+              <li><a href="#">Décembre 2024</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <h3><%= settings.siteTitle %></h3>
+          <p><%= settings.siteDescription %></p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Liens rapides</h4>
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/a-propos.html">À propos</a></li>
+            <li><a href="/services.html">Services</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-social">
+          <h4>Suivez-nous</h4>
+          <ul class="social-links">
+            <% if (settings.socialMedia && settings.socialMedia.facebook) { %>
+            <li><a href="<%= settings.socialMedia.facebook %>" target="_blank" rel="noopener">Facebook</a></li>
+            <% } %>
+            <% if (settings.socialMedia && settings.socialMedia.twitter) { %>
+            <li><a href="<%= settings.socialMedia.twitter %>" target="_blank" rel="noopener">Twitter</a></li>
+            <% } %>
+            <% if (settings.socialMedia && settings.socialMedia.instagram) { %>
+            <li><a href="<%= settings.socialMedia.instagram %>" target="_blank" rel="noopener">Instagram</a></li>
+            <% } %>
+            <% if (settings.socialMedia && settings.socialMedia.linkedin) { %>
+            <li><a href="<%= settings.socialMedia.linkedin %>" target="_blank" rel="noopener">LinkedIn</a></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; <%= new Date().getFullYear() %> <%= settings.siteTitle %>. Tous droits réservés.</p>
+        <p>Propulsé par MiniCMS</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

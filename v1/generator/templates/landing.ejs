@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= meta.title %> | <%= settings.siteTitle %></title>
+  <meta name="description" content="<%= meta.description %>">
+  <% if (meta.keywords) { %>
+  <meta name="keywords" content="<%= meta.keywords %>">
+  <% } %>
+  
+  <!-- Favicon -->
+  <% if (settings.favicon) { %>
+  <link rel="icon" href="<%= settings.favicon %>">
+  <% } %>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  
+  <!-- Police de caractères -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <% 
+  const fontFamilies = [];
+  if (theme.fonts.body) fontFamilies.push(theme.fonts.body.split(',')[0]);
+  if (theme.fonts.heading && theme.fonts.heading !== theme.fonts.body) fontFamilies.push(theme.fonts.heading.split(',')[0]);
+  const googleFonts = fontFamilies
+    .filter(font => !font.includes('serif') && !font.includes('Arial') && !font.includes('Helvetica'))
+    .map(font => font.trim().replace(/\s+/g, '+'))
+    .join('&family=');
+  %>
+  <% if (googleFonts) { %>
+  <link href="https://fonts.googleapis.com/css2?family=<%= googleFonts %>:wght@400;500;700&display=swap" rel="stylesheet">
+  <% } %>
+  
+  <style>
+    /* Styles spécifiques aux pages de landing */
+    .landing-header {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      position: relative;
+    }
+    
+    .landing-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    
+    .landing-header .container {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .landing-cta {
+      margin-top: 2rem;
+    }
+    
+    .landing-cta .btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .landing-sections .content-block {
+      padding: 4rem 0;
+    }
+    
+    .landing-sections .content-block:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+  </style>
+</head>
+<body>
+  <!-- En-tête simplifié -->
+  <header class="site-header landing-site-header">
+    <div class="container">
+      <div class="header-content">
+        <% if (settings.logo) { %>
+        <a href="/" class="logo">
+          <img src="<%= settings.logo %>" alt="<%= settings.siteTitle %>">
+        </a>
+        <% } else { %>
+        <a href="/" class="site-title"><%= settings.siteTitle %></a>
+        <% } %>
+        
+        <!-- Navigation simplifiée -->
+        <nav class="main-nav">
+          <ul>
+            <li><a href="#features">Fonctionnalités</a></li>
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Section hero -->
+  <section class="landing-header" style="background-image: url('<%= blocks.find(b => b.type === 'image' && b.name.toLowerCase().includes('hero'))?.content.src || '/assets/images/default-hero.jpg' %>');">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h1><%= page.title %></h1>
+          <p class="lead"><%= page.description %></p>
+          <div class="landing-cta">
+            <a href="#contact" class="btn btn-primary">Nous contacter</a>
+            <a href="#features" class="btn btn-secondary">En savoir plus</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sections de contenu -->
+  <main class="landing-sections">
+    <% 
+    let sections = {
+      features: blocks.filter(b => b.name.toLowerCase().includes('feature')),
+      about: blocks.filter(b => b.name.toLowerCase().includes('about')),
+      testimonials: blocks.filter(b => b.name.toLowerCase().includes('testimonial')),
+      contact: blocks.filter(b => b.name.toLowerCase().includes('contact')),
+      other: blocks.filter(b => 
+        !b.name.toLowerCase().includes('feature') && 
+        !b.name.toLowerCase().includes('about') && 
+        !b.name.toLowerCase().includes('testimonial') && 
+        !b.name.toLowerCase().includes('contact') &&
+        !b.name.toLowerCase().includes('hero')
+      )
+    };
+    %>
+    
+    <!-- Fonctionnalités -->
+    <% if (sections.features.length > 0) { %>
+    <section id="features" class="section-features">
+      <div class="container">
+        <h2 class="section-title">Nos fonctionnalités</h2>
+        <div class="features-grid">
+          <% sections.features.forEach(block => { %>
+            <div class="feature-item" id="<%= block.id %>" <%= block.styleAttr %> <%= block.animationAttr %>>
+              <%- block.processedContent %>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+    <% } %>
+    
+    <!-- À propos -->
+    <% if (sections.about.length > 0) { %>
+    <section id="about" class="section-about">
+      <div class="container">
+        <h2 class="section-title">À propos de nous</h2>
+        <% sections.about.forEach(block => { %>
+          <div class="about-content" id="<%= block.id %>" <%= block.styleAttr %> <%= block.animationAttr %>>
+            <%- block.processedContent %>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+    <% } %>
+    
+    <!-- Témoignages -->
+    <% if (sections.testimonials.length > 0) { %>
+    <section id="testimonials" class="section-testimonials">
+      <div class="container">
+        <h2 class="section-title">Témoignages</h2>
+        <div class="testimonials-grid">
+          <% sections.testimonials.forEach(block => { %>
+            <div class="testimonial-item" id="<%= block.id %>" <%= block.styleAttr %> <%= block.animationAttr %>>
+              <%- block.processedContent %>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+    <% } %>
+    
+    <!-- Autres sections -->
+    <% if (sections.other.length > 0) { %>
+    <section class="section-other">
+      <div class="container">
+        <% sections.other.forEach(block => { %>
+          <div class="content-block" id="<%= block.id %>" <%= block.styleAttr %> <%= block.animationAttr %>>
+            <%- block.processedContent %>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+    <% } %>
+    
+    <!-- Contact -->
+    <% if (sections.contact.length > 0) { %>
+    <section id="contact" class="section-contact">
+      <div class="container">
+        <h2 class="section-title">Contactez-nous</h2>
+        <% sections.contact.forEach(block => { %>
+          <div class="contact-content" id="<%= block.id %>" <%= block.styleAttr %> <%= block.animationAttr %>>
+            <%- block.processedContent %>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+    <% } %>
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <h3><%= settings.siteTitle %></h3>
+          <p><%= settings.siteDescription %></p>
+        </div>
+        
+        <div class="footer-social">
+          <h4>Suivez-nous</h4>
+          <ul class="social-links">
+            <% if (settings.socialMedia && settings.socialMedia.facebook) { %>
+            <li><a href="<%= settings.socialMedia.facebook %>" target="_blank" rel="noopener">Facebook</a></li>
+            <% } %>
+            <% if (settings.socialMedia && settings.socialMedia.twitter) { %>
+            <li><a href="<%= settings.socialMedia.twitter %>" target="_blank" rel="noopener">Twitter</a></li>
+            <% } %>
+            <% if (settings.socialMedia && settings.socialMedia.instagram) { %>
+            <li><a href="<%= settings.socialMedia.instagram %>" target="_blank" rel="noopener">Instagram</a></li>
+            <% } %>
+            <% if (settings.socialMedia && settings.socialMedia.linkedin) { %>
+            <li><a href="<%= settings.socialMedia.linkedin %>" target="_blank" rel="noopener">LinkedIn</a></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; <%= new Date().getFullYear() %> <%= settings.siteTitle %>. Tous droits réservés.</p>
+        <p>Propulsé par MiniCMS</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

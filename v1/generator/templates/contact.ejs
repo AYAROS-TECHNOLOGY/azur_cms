@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= meta.title %> | <%= settings.siteTitle %></title>
+  <meta name="description" content="<%= meta.description %>">
+  <% if (meta.keywords) { %>
+  <meta name="keywords" content="<%= meta.keywords %>">
+  <% } %>
+  
+  <!-- Favicon -->
+  <% if (settings.favicon) { %>
+  <link rel="icon" href="<%= settings.favicon %>">
+  <% } %>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  
+  <!-- Police de caractères -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <% 
+  const fontFamilies = [];
+  if (theme.fonts.body) fontFamilies.push(theme.fonts.body.split(',')[0]);
+  if (theme.fonts.heading && theme.fonts.heading !== theme.fonts.body) fontFamilies.push(theme.fonts.heading.split(',')[0]);
+  const googleFonts = fontFamilies
+    .filter(font => !font.includes('serif') && !font.includes('Arial') && !font.includes('Helvetica'))
+    .map(font => font.trim().replace(/\s+/g, '+'))
+    .join('&family=');
+  %>
+  <% if (googleFonts) { %>
+  <link href="https://fonts.googleapis.com/css2?family=<%= googleFonts %>:wght@400;500;700&display=swap" rel="stylesheet">
+  <% } %>
+  
+  <style>
+    /* Styles spécifiques à la page de contact */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    @media (min-width: 768px) {
+      .contact-layout {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .contact-form {
+      background-color: #f8f9fa;
+      padding: 2rem;
+      border-radius: 8px;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+    }
+    
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .contact-info-item {
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-info-item h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      color: var(--color-primary);
+    }
+    
+    .map-container {
+      height: 400px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- En-tête -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <% if (settings.logo) { %>
+        <a href="/" class="logo">
+          <img src="<%= settings.logo %>" alt="<%= settings.siteTitle %>">
+        </a>
+        <% } else { %>
+        <a href="/" class="site-title"><%= settings.siteTitle %></a>
+        <% } %>
+        
+        <!-- Navigation -->
+        <nav class="main-nav">
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/a-propos.html">À propos</a></li>
+            <li><a href="/services.html">Services</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/contact.html" class="active">Contact</a></li>
+          </ul>
+        </nav>
+        
+        <!-- Bouton menu mobile -->
+        <button class="menu-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="site-main">
+    <div class="page-header">
+      <div class="container">
+        <h1><%= page.title %></h1>
+        <% if (page.description) { %>
+        <p class="page-description"><%= page.description %></p>
+        <% } %>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="contact-layout">
+        <div class="contact-form">
+          <h2>Envoyez-nous un message</h2>
+          <form id="contactForm" action="#" method="POST">
+            <div class="form-group">
+              <label for="name" class="form-label">Nom</label>
+              <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="subject" class="form-label">Sujet</label>
+              <input type="text" id="subject" name="subject" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="message" class="form-label">Message</label>
+              <textarea id="message" name="message" class="form-control" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+          </form>
+        </div>
+        
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <h3>Adresse</h3>
+            <p>123 Rue Exemple<br>75000 Paris<br>France</p>
+          </div>
+          
+          <div class="contact-info-item">
+            <h3>Téléphone</h3>
+            <p>+33 1 23 45 67 89</p>
+          </div>
+          
+          <div class="contact-info-item">
+            <h3>Email</h3>
+            <p>contact@example.com</p>
+          </div>
+          
+          <div class="contact-info-item">
+            <h3>Horaires d'ouverture</h3>
+            <p>Du lundi au vendredi<br>9h00 - 18h00</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Carte -->
+      <div class="map-container">
+        <iframe src="https://maps.google.com/maps?q=Paris&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+      </div>
+      
+      <!-- Blocs de contenu supplémentaires -->
+      <% blocks.forEach(block => { %>
+        <div class="content-block" id="<%= block.id %>" <%= block.styleAttr %> <%= block.animationAttr %>>
+          <%- block.processedContent %>
+        </div>
+      <% }); %>
+    </div>
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <h3><%= settings.siteTitle %></h3>
+          <p><%= settings.siteDescription %></p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Liens rapides</h4>
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/a-propos.html">À propos</a></li>
+            <li><a href="/services.html">Services</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-social">
+          <h4>Suivez-nous</h4>
+          <ul class="social-links">
+            <% if (settings.socialMedia && settings.socialMedia.facebook) { %>
+            <li><a href="<%= settings.socialMedia.facebook %>" target="_blank" rel="noopener">Facebook</a></li>
+            <% } %>
+            <% if (settings.socialMedia && settings.socialMedia.twitter) { %>
+            <li><a href="<%= settings.socialMedia.twitter %>" target="_blank" rel="noopener">Twitter</a></li>
+            <% } %>
+            <% if (settings.socialMedia && settings.socialMedia.instagram) { %>
+            <li><a href="<%= settings.socialMedia.instagram %>" target="_blank" rel="noopener">Instagram</a></li>
+            <% } %>
+            <% if (settings.socialMedia && settings.socialMedia.linkedin) { %>
+            <li><a href="<%= settings.socialMedia.linkedin %>" target="_blank" rel="noopener">LinkedIn</a></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; <%= new Date().getFullYear() %> <%= settings.siteTitle %>. Tous droits réservés.</p>
+        <p>Propulsé par MiniCMS</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/assets/js/main.js"></script>
+  <script>
+    // Script pour le formulaire de contact
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simuler l'envoi du formulaire
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+      
+      submitButton.disabled = true;
+      submitButton.textContent = 'Envoi en cours...';
+      
+      // Simuler un délai d'envoi
+      setTimeout(() => {
+        alert('Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.');
+        this.reset();
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
