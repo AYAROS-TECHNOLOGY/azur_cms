@@ -1,0 +1,271 @@
+openapi: 3.0.0
+info:
+  title: Mini CMS API - Authentification
+  version: "1.0.0"
+  description: API pour l'inscription et la connexion des utilisateurs.
+servers:
+  - url: http://localhost:4000
+tags:
+  - name: Authentification
+    description: Inscription et connexion des utilisateurs
+  - name: Media
+    description: Upload de fichiers médias
+  - name: Pages
+    description: Gestion des pages statiques
+  - name: Blog
+    description: Gestion des articles de blog
+  - name: Template
+    description: Gestion du template statique et de ses blocs éditables
+  - name: Builder
+    description: Gestion avancée du template pour l’éditeur visuel
+paths:
+  /api/auth/signup:
+    post:
+      summary: Inscription d’un nouvel utilisateur
+      tags:
+        - Authentification
+      requestBody:
+        description: Données d’inscription (email et mot de passe)
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 6
+      responses:
+        "200":
+          description: Utilisateur inscrit avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "400":
+          description: Validation échouée ou utilisateur existant
+  /api/auth/login:
+    post:
+      summary: Connexion d’un utilisateur
+      tags:
+        - Authentification
+      requestBody:
+        description: Données de connexion (email et mot de passe)
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Connexion réussie et token JWT retourné
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  token:
+                    type: string
+        "401":
+          description: Identifiants invalides
+  /api/pages:
+    get:
+      summary: Récupère la liste de toutes les pages
+      tags: [Pages]
+      responses:
+        200:
+          description: Liste des pages
+  /api/pages/{slug}:
+    get:
+      summary: Récupère une page par son slug
+      tags: [Pages]
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+          description: Le slug de la page
+      responses:
+        200:
+          description: Détails de la page
+        404:
+          description: Page non trouvée
+  api/pages/{slug}:
+    post:
+      summary: Crée ou met à jour une page avec versionning
+      tags: [Pages]
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+          description: Le slug de la page
+      requestBody:
+        description: Objet JSON de la page (titre, contenu, etc.)
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+      responses:
+        200:
+          description: Page sauvegardée avec succès
+  /api/pages/{slug}:
+    delete:
+      summary: Supprime une page par son slug
+      tags: [Pages]
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+          description: Le slug de la page
+      responses:
+        200:
+          description: Page supprimée avec succès
+        404:
+          description: Page non trouvée
+  api/blog:
+    get:
+      summary: Récupère la liste des articles de blog
+      tags: [Blog]
+      responses:
+        200:
+          description: Liste des articles
+  /api/upload:
+    post:
+      summary: Upload d'un fichier média (image, vidéo, etc.)
+      tags: [Media]
+      requestBody:
+        description: Fichier à uploader
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: Fichier uploadé avec succès
+  /api/template/render:
+    get:
+      summary: Retourne le template complet avec les modifications intégrées
+      tags: [Template]
+      responses:
+        200:
+          description: HTML du template avec les blocs mis à jour
+          content:
+            text/html:
+              schema:
+                type: string
+  /api/template/blocks/{blockId}:
+    post:
+      summary: Met à jour le contenu d'un bloc éditable
+      tags: [Template]
+      parameters:
+        - in: path
+          name: blockId
+          required: true
+          schema:
+            type: string
+          description: Identifiant du bloc à mettre à jour
+      requestBody:
+        description: Objet JSON contenant le nouveau contenu (HTML) du bloc
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        200:
+          description: Bloc mis à jour avec succès
+  /api/template/blocks:
+    get:
+      summary: Récupère la liste des blocs éditables du template
+      tags: [Template]
+      responses:
+        200:
+          description: Objet JSON listant les blocs éditables (id et contenu)
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/builder/preview:
+    get:
+      summary: Renvoie le HTML complet en intégrant les modifications sauvegardées
+      tags: [Builder]
+      responses:
+        200:
+          description: HTML final
+          content:
+            text/html:
+              schema:
+                type: string
+  /api/builder/elements/{id}:
+    post:
+      summary: Met à jour un élément (html, style, className, etc.)
+      tags: [Builder]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID unique de l'élément
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                html:
+                  type: string
+                style:
+                  type: string
+                className:
+                  type: string
+      responses:
+        200:
+          description: Élement mis à jour
+  /api/builder/elements:
+    get:
+      summary: Analyse le template et renvoie la liste des éléments modifiables
+      tags: [Builder]
+      responses:
+        200:
+          description: Renvoie l'arborescence des éléments

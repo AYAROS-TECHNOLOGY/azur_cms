@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayurveda Équilibre</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --color-primary: #0a4b44;
+            --color-accent: #d4a039;
+            --color-light: #f9f5f0;
+            --color-dark: #1f332e;
+            --color-neutral: #e6e0d4;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--color-dark);
+            background-color: var(--color-light);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Curseur personnalisé subtil */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--color-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+            z-index: 9999;
+            opacity: 0.7;
+        }
+        
+        .custom-cursor.expand {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(10, 75, 68, 0.05);
+        }
+        
+        /* Formes organiques de fond */
+        .bg-shape {
+            position: absolute;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .shape-1 {
+            top: -10%;
+            right: -5%;
+            width: 50%;
+            opacity: 0.1;
+        }
+        
+        .shape-2 {
+            bottom: 30%;
+            left: -10%;
+            width: 40%;
+            opacity: 0.1;
+        }
+        
+        /* En-tête organique avec menu */
+        .header {
+            padding: 2rem 0;
+            position: relative;
+            width: 100%;
+            z-index: 10;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--color-primary);
+            position: relative;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-accent);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        
+        .nav-menu li a {
+            text-decoration: none;
+            color: var(--color-dark);
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu li a:hover {
+            color: var(--color-primary);
+        }
+        
+        .nav-menu li a:hover::after {
+            width: 100%;
+        }
+        
+        .cta-btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-accent);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        
+        .cta-btn:hover::before {
+            left: 0;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+            position: relative;
+            z-index: 20;
+        }
+        
+        .mobile-toggle span {
+            display: block;
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: var(--color-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-toggle span:nth-child(1) {
+            top: 0;
+        }
+        
+        .mobile-toggle span:nth-child(2) {
+            top: 9px;
+        }
+        
+        .mobile-toggle span:nth-child(3) {
+            top: 18px;
+        }
+        
+        /* Section héro organique et fluide */
+        .hero {
+            height: 90vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-top: -80px;
+            padding-top: 80px;
+            clip-path: ellipse(120% 100% at 50% 0%);
+            background: linear-gradient(to bottom, rgba(10, 75, 68, 0.9), rgba(10, 75, 68, 0.8)), url('https://images.unsplash.com/photo-1552693673-1bf958298935?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            flex: 1;
+            color: white;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 4.5rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: var(--color-dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .hero-btn:hover {
+            background-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .hero-img-shape {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border-radius: 63% 37% 54% 46% / 55% 52% 48% 45%;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .hero-img-shape img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .hero-img-shape:hover {
+            border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+        }
+        
+        .hero-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        
+        /* Section services avec formes organiques */
+        .services {
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-title-container {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+        
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: var(--color-accent);
+        }
+        
+        .section-subtitle {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--color-dark);
+            opacity: 0.8;
+        }
+        
+        .services-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem;
+        }
+        
+        .service-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            position: relative;
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.07);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        /* Forme organique pour l'image */
+        .service-img-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .service-img-container::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(to top, white, transparent);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .service-img-shape {
+            position: absolute;
+            width: 120%;
+            height: 100%;
+            top: 0;
+            left: -10%;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 50% 100%, 0% 85%);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:nth-child(2) .service-img-shape {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 75% 100%, 0% 95%);
+        }
+        
+        .service-card:nth-child(3) .service-img-shape {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 95%, 25% 100%, 0% 85%);
+        }
+        
+        .service-img-shape img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .service-content {
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .service-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .service-desc {
+            margin-bottom: 1.5rem;
+            color: var(--color-dark);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .service-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-detail {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-accent);
+            margin-bottom: 0.3rem;
+        }
+        
+        .detail-value {
+            font-weight: 500;
+        }
+        
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--color-primary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .service-link span {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .service-link:hover {
+            color: var(--color-accent);
+        }
+        
+        .service-link:hover span {
+            transform: translateX(5px);
+        }
+        
+        /* Section philosophie avec mise en page organique */
+        .philosophy {
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(10, 75, 68, 0.04);
+            clip-path: polygon(0% 7%, 100% 0%, 100% 93%, 0% 100%);
+        }
+        
+        .philosophy-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4rem;
+        }
+        
+        .philosophy-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .philosophy-img-stack {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+        
+        .philosophy-img-1, .philosophy-img-2 {
+            position: absolute;
+            overflow: hidden;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            transition: all 0.5s ease;
+        }
+        
+        .philosophy-img-1 {
+            width: 70%;
+            height: 60%;
+            top: 0;
+            right: 0;
+            z-index: 2;
+        }
+        
+        .philosophy-img-2 {
+            width: 70%;
+            height: 60%;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .philosophy-img-1:hover, .philosophy-img-2:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .philosophy-img-1 img, .philosophy-img-2 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .philosophy-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .philosophy-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--color-primary);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .philosophy-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background-color: var(--color-accent);
+        }
+        
+        .philosophy-text {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            color: var(--color-dark);
+        }
+        
+        .principles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .principle {
+            flex: 1;
+            min-width: 220px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .principle:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .principle-icon {
+            font-size: 2.5rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+        
+        .principle-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .principle-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--color-dark);
+            opacity: 0.8;
+        }
+        
+        /* Section témoignages avec mise en page organique */
+        .testimonials {
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonials-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .testimonials-carousel {
+            display: flex;
+            gap: 2rem;
+            overflow-x: hidden;
+            padding: 2rem 0;
+            position: relative;
+        }
+        
+        .testimonial-card {
+            flex: 0 0 auto;
+            width: calc(33.33% - 1.33rem);
+            min-width: 280px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .testimonial-card::before {
+            content: "\201C";
+            position: absolute;
+            top: 0;
+            left: 10px;
+            font-family: Georgia, serif;
+            font-size: 8rem;
+            line-height: 1;
+            color: rgba(10, 75, 68, 0.05);
+        }
+        
+        .testimonial-content {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--color-dark);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1rem;
+            border: 3px solid rgba(10, 75, 68, 0.1);
+        }
+        
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .author-info .stars {
+            color: var(--color-accent);
+        }
+        
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid rgba(10, 75, 68, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        
+        /* Section contact avec fond organique */
+        .contact {
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--color-primary);
+            color: white;
+            clip-path: ellipse(100% 100% at 50% 100%);
+        }
+        
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .contact-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background-color: var(--color-accent);
+        }
+        
+        .contact-text {
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            opacity: 0.9;
+            max-width: 500px;
+        }
+        
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .contact-icon {
+            margin-right: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--color-accent);
+        }
+        
+        .contact-item-text h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-item-text p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+        
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: none;
+        }
+        
+        .form-btn {
+            background-color: var(--color-accent);
+            color: var(--color-dark);
+            border: none;
+            padding: 1rem 2rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .form-btn:hover {
+            background-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Pied de page organique */
+        .footer {
+            padding: 5rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--color-light);
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-top {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .footer-info {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-desc {
+            max-width: 400px;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            color: var(--color-dark);
+            opacity: 0.8;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(10, 75, 68, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--color-primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .footer-nav {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .footer-heading {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .footer-links li a {
+            color: var(--color-dark);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links li a:hover {
+            color: var(--color-primary);
+            opacity: 1;
+            transform: translateX(5px);
+        }
+        
+        .footer-bottom {
+            padding-top: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(10, 75, 68, 0.1);
+            color: var(--color-dark);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+                max-width: 100%;
+            }
+            
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .hero-subtitle {
+                max-width: 80%;
+                margin: 0 auto 2.5rem;
+            }
+            
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .philosophy-container {
+                flex-direction: column-reverse;
+            }
+            
+            .philosophy-content {
+                text-align: center;
+            }
+            
+            .philosophy-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .testimonial-card {
+                width: calc(50% - 1rem);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem 0;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 400px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: all 0.5s ease;
+                z-index: 15;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .mobile-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+            
+            .mobile-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .mobile-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(8px, -8px);
+            }
+            
+            .hero {
+                height: auto;
+                padding: 6rem 0 4rem;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-img-shape {
+                height: 350px;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+            
+            .testimonial-card {
+                width: 100%;
+            }
+            
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Curseur personnalisé -->
+    <div class="custom-cursor"></div>
+    
+    <!-- Formes organiques de fond -->
+    <svg class="bg-shape shape-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M41.3,-65.5C54.6,-56.2,67.3,-46.6,77,-33.3C86.7,-20.1,93.3,-3.1,90.9,12.5C88.5,28.1,77.1,42.2,63.5,51.5C49.9,60.7,33.9,65,18.3,67.5C2.7,70,-12.5,70.6,-26.5,66.2C-40.5,61.9,-53.3,52.5,-62.8,40C-72.3,27.4,-78.6,11.8,-78.2,-3.9C-77.8,-19.6,-70.7,-35.3,-59.6,-45.2C-48.5,-55.2,-33.3,-59.3,-19.4,-68.4C-5.5,-77.5,8.3,-91.5,22,-90C35.7,-88.4,48,-74.8,41.3,-65.5Z" transform="translate(100 100)" fill="#0a4b44"/>
+    </svg>
+    <svg class="bg-shape shape-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M36.8,-60.1C47.5,-51.9,55.8,-41.4,63.4,-29.3C70.9,-17.2,77.6,-3.5,76.6,9.6C75.6,22.6,66.9,35,56.2,43.2C45.6,51.4,32.9,55.4,20.2,58.7C7.5,62,-5.1,64.5,-17.1,62.6C-29.1,60.7,-40.4,54.3,-49.4,45.2C-58.3,36.1,-64.9,24.3,-68.4,11.2C-71.9,-1.9,-72.2,-16.2,-67.7,-28.9C-63.1,-41.5,-53.6,-52.4,-42,-60.7C-30.3,-69,-15.2,-74.5,-0.7,-73.3C13.7,-72.2,26.1,-68.3,36.8,-60.1Z" transform="translate(100 100)" fill="#d4a039"/>
+    </svg>
+    
+    <!-- En-tête avec menu -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Ayurveda Équilibre</div>
+            <ul class="nav-menu">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Soins</a></li>
+                <li><a href="#philosophy">Philosophie</a></li>
+                <li><a href="#testimonials">Témoignages</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="cta-btn">Prendre RDV</button>
+            <div class="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Section héro -->
+    <section class="hero" id="accueil">
+        <div class="hero-pattern"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Retrouvez l'harmonie naturelle</h1>
+                <p class="hero-subtitle">Découvrez les bienfaits millénaires de l'Ayurveda pour équilibrer votre corps et votre esprit</p>
+                <button class="hero-btn">Découvrir nos soins</button>
+            </div>
+            <div class="hero-image">
+                <div class="hero-img-shape">
+                    <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Ayurvedic treatment">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section services -->
+    <section class="services" id="services">
+        <div class="section-title-container">
+            <h2 class="section-title">Nos soins ayurvédiques</h2>
+            <p class="section-subtitle">Des traitements personnalisés pour harmoniser votre énergie vitale et restaurer l'équilibre naturel</p>
+        </div>
+        
+        <div class="services-container">
+            <div class="service-card">
+                <div class="service-img-container">
+                    <div class="service-img-shape">
+                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Abhyanga massage">
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Abhyanga</h3>
+                    <p class="service-desc">Un massage complet du corps avec des huiles chaudes médicinales, personnalisé selon votre constitution ayurvédique.</p>
+                    <div class="service-meta">
+                        <div class="service-detail">
+                            <span class="detail-label">Durée</span>
+                            <span class="detail-value">90 min</span>
+                        </div>
+                        <div class="service-detail">
+                            <span class="detail-label">Tarif</span>
+                            <span class="detail-value">120€</span>
+                        </div>
+                    </div>
+                    <a href="#" class="service-link">Découvrir <span>→</span></a>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-img-container">
+                    <div class="service-img-shape">
+                        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Shirodhara treatment">
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Shirodhara</h3>
+                    <p class="service-desc">Un soin d'exception où un filet d'huile tiède coule sur le front, apaisant le système nerveux et harmonisant les énergies mentales.</p>
+                    <div class="service-meta">
+                        <div class="service-detail">
+                            <span class="detail-label">Durée</span>
+                            <span class="detail-value">60 min</span>
+                        </div>
+                        <div class="service-detail">
+                            <span class="detail-label">Tarif</span>
+                            <span class="detail-value">140€</span>
+                        </div>
+                    </div>
+                    <a href="#" class="service-link">Découvrir <span>→</span></a>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-img-container">
+                    <div class="service-img-shape">
+                        <img src="https://images.unsplash.com/photo-1598901847921-263465b67fb9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Consultation ayurvedique">
+                    </div>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Consultation Dosha</h3>
+                    <p class="service-desc">Découvrez votre constitution unique et recevez des recommandations personnalisées pour optimiser votre bien-être quotidien.</p>
+                    <div class="service-meta">
+                        <div class="service-detail">
+                            <span class="detail-label">Durée</span>
+                            <span class="detail-value">75 min</span>
+                        </div>
+                        <div class="service-detail">
+                            <span class="detail-label">Tarif</span>
+                            <span class="detail-value">95€</span>
+                        </div>
+                    </div>
+                    <a href="#" class="service-link">Découvrir <span>→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section philosophie -->
+    <section class="philosophy" id="philosophy">
+        <div class="philosophy-container">
+            <div class="philosophy-image">
+                <div class="philosophy-img-stack">
+                    <div class="philosophy-img-1">
+                        <img src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Ayurvedic herbs">
+                    </div>
+                    <div class="philosophy-img-2">
+                        <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Ayurvedic oils">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="philosophy-content">
+                <h2 class="philosophy-title">Notre philosophie</h2>
+                <p class="philosophy-text">L'Ayurveda est une science holistique millénaire qui considère chaque individu comme unique. Notre approche intègre cette sagesse ancestrale dans un contexte moderne, créant un équilibre parfait entre tradition et innovation.</p>
+                <p class="philosophy-text">Nous croyons en un accompagnement personnalisé qui reconnaît l'interconnexion du corps, de l'esprit et de l'âme dans le processus de guérison et de bien-être.</p>
+                
+                <div class="principles">
+                    <div class="principle">
+                        <div class="principle-icon">🌿</div>
+                        <h3 class="principle-title">Naturel</h3>
+                        <p class="principle-desc">Des remèdes et soins 100% naturels, respectueux du corps et de l'environnement.</p>
+                    </div>
+                    
+                    <div class="principle">
+                        <div class="principle-icon">⚖️</div>
+                        <h3 class="principle-title">Équilibre</h3>
+                        <p class="principle-desc">Harmonisation des doshas pour un bien-être complet et durable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section témoignages -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-title-container">
+            <h2 class="section-title">Témoignages</h2>
+            <p class="section-subtitle">Découvrez ce que nos clients disent de leur expérience avec nos soins ayurvédiques</p>
+        </div>
+        
+        <div class="testimonials-container">
+            <div class="testimonials-carousel">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"Une expérience transformative qui a profondément changé ma relation avec mon corps et mon bien-être. Je me sens plus équilibrée et centrée après chaque session."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Sophie M.">
+                        </div>
+                        <div class="author-info">
+                            <h3>Sophie Martin</h3>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"Les massages ayurvédiques ont apporté un soulagement incroyable à mes problèmes de dos chroniques. L'approche holistique a fait toute la différence."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Thomas D.">
+                        </div>
+                        <div class="author-info">
+                            <h3>Thomas Dupont</h3>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"La consultation Dosha a été révélatrice. Comprendre ma constitution m'a permis d'adapter mon alimentation et mon mode de vie avec des résultats incroyables."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Marie L.">
+                        </div>
+                        <div class="author-info">
+                            <h3>Marie Laurent</h3>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-controls">
+                <div class="control-btn prev">←</div>
+                <div class="control-btn next">→</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section contact -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2 class="contact-title">Contactez-nous</h2>
+                <p class="contact-text">Nous serions ravis de vous accompagner dans votre parcours vers l'équilibre et le bien-être holistique. Contactez-nous pour planifier votre consultation personnalisée.</p>
+                
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-item-text">
+                            <h3>Adresse</h3>
+                            <p>123 Rue de la Sérénité<br>75001 Paris, France</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-item-text">
+                            <h3>Téléphone</h3>
+                            <p>+33 1 23 45 67 89</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-item-text">
+                            <h3>Email</h3>
+                            <p>contact@ayurveda-equilibre.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" placeholder="Votre nom">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Votre email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service">Service souhaité</label>
+                        <input type="text" id="service" placeholder="Type de soin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Votre message"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-btn">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pied de page -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-info">
+                    <div class="footer-logo">Ayurveda Équilibre</div>
+                    <p class="footer-desc">Un espace dédié à l'équilibre holistique où la sagesse ancestrale rencontre le bien-être moderne.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">👍</a>
+                        <a href="#" class="social-link">🐦</a>
+                    </div>
+                </div>
+                
+                <div class="footer-nav">
+                    <h3 class="footer-heading">Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#services">Soins</a></li>
+                        <li><a href="#philosophy">Philosophie</a></li>
+                        <li><a href="#testimonials">Témoignages</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-nav">
+                    <h3 class="footer-heading">Nos soins</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Abhyanga</a></li>
+                        <li><a href="#">Shirodhara</a></li>
+                        <li><a href="#">Consultation Dosha</a></li>
+                        <li><a href="#">Tous nos soins</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-nav">
+                    <h3 class="footer-heading">Horaires</h3>
+                    <ul class="footer-links">
+                        <li>Lundi - Vendredi: 9h - 20h</li>
+                        <li>Samedi: 10h - 18h</li>
+                        <li>Dimanche: Fermé</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Ayurveda Équilibre. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Curseur personnalisé
+            const cursor = document.querySelector('.custom-cursor');
+            const links = document.querySelectorAll('a, button, .service-card, .principle');
+            
+            document.addEventListener('mousemove', function(e) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            
+            links.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    cursor.classList.add('expand');
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    cursor.classList.remove('expand');
+                });
+            });
+            
+            // Menu mobile
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            mobileToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            
+            // Navigation fluide
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Fermer le menu mobile si ouvert
+                    mobileToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Contrôles de carousel simples
+            const carousel = document.querySelector('.testimonials-carousel');
+            const prevBtn = document.querySelector('.control-btn.prev');
+            const nextBtn = document.querySelector('.control-btn.next');
+            const cardWidth = document.querySelector('.testimonial-card').offsetWidth + 32; // +margin
+            
+            let position = 0;
+            const maxPosition = carousel.children.length * cardWidth - carousel.offsetWidth;
+            
+            prevBtn.addEventListener('click', function() {
+                position = Math.max(position - cardWidth, 0);
+                carousel.style.transform = `translateX(-${position}px)`;
+                carousel.style.transition = 'transform 0.5s ease';
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                position = Math.min(position + cardWidth, maxPosition);
+                carousel.style.transform = `translateX(-${position}px)`;
+                carousel.style.transition = 'transform 0.5s ease';
+            });
+            
+            // Animation au défilement
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            const animatedElements = document.querySelectorAll('.service-card, .philosophy-img-1, .philosophy-img-2, .principle, .testimonial-card');
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
