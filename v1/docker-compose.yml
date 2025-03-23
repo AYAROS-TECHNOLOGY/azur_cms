@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  api:
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: minicms_api
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+      - ./uploads:/usr/src/app/uploads
+      - ./temp:/usr/src/app/temp
+      - ./build:/usr/src/app/build
+    env_file:
+      - .env
+    networks:
+      - minicms-network
+    depends_on:
+      - mongo
+
+  admin:
+    build:
+      context: ./admin-app
+      dockerfile: Dockerfile
+    container_name: minicms_admin
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./admin-app:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - .env
+    networks:
+      - minicms-network
+    depends_on:
+      - api
+
+  mongo:
+    image: mongo:latest
+    container_name: minicms_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - minicms-network
+
+networks:
+  minicms-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
